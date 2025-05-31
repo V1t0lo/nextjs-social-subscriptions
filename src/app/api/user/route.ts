@@ -1,10 +1,10 @@
 // src/app/api/user/route.ts
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 
-export async function GET() {
+export async function GET(req: NextRequest) {
   try {
     const session = await getServerSession(authOptions);
 
@@ -12,21 +12,21 @@ export async function GET() {
       return NextResponse.json({ error: "No autenticado" }, { status: 401 });
     }
 
+    const { searchParams } = new URL(req.url);
+    const userId = searchParams.get("userId");
+
+    if (!userId) {
+      return NextResponse.json(
+        { error: "Falta identificador" },
+        { status: 400 }
+      );
+    }
+
     const user = await prisma.user.findUnique({
-      where: { id: session.user.id },
+      where: { id: userId },
       select: {
         name: true,
         email: true,
-        posts: {
-          select: {
-            id: true,
-            url: true,
-            title: true,
-            description: true,
-            type: true,
-            createdAt: true,
-          },
-        },
       },
     });
 
@@ -38,8 +38,8 @@ export async function GET() {
     }
 
     return NextResponse.json(user);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error) {
-    console.error("Error al obtener perfil:", error);
     return NextResponse.json(
       { error: "Error al obtener perfil" },
       { status: 500 }

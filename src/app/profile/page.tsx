@@ -33,10 +33,15 @@ export default async function ProfilePage() {
       />
 
       {/* Información del usuario */}
-      <UserInfo user={user} />
+      <UserInfo
+        user={user}
+        // isOwnProfile={isOwnProfile}
+        // isSubscribed={isSubscribed}
+        // onSubscribeToggle={handleSubscribeToggle}
+      />
 
       {/* Contenido interactivo del perfil */}
-      <ProfileContent />
+      <ProfileContent userId={user.id} />
     </main>
   );
 }

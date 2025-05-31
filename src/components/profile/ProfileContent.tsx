@@ -1,35 +1,29 @@
 // components/profile/ProfileContent.tsx
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import PostUploadForm from "./PostUploadForm";
 import ProfileGallery from "./ProfileGallery";
 import PostModal from "./PostModal";
 import { Post } from "@/types";
 
-export default function ProfileContent() {
-  const [posts, setPosts] = useState<Post[]>([]);
+interface ProfileContentProps {
+  userId: string;
+}
+
+export default function ProfileContent({ userId }: ProfileContentProps) {
+  const [refreshTrigger, setRefreshTrigger] = useState(0);
   const [selectedPost, setSelectedPost] = useState<Post | null>(null);
 
-  useEffect(() => {
-    const fetchPosts = async () => {
-      const res = await fetch("/api/user");
-      const data = await res.json();
-      setPosts(data.posts || []);
-    };
-    fetchPosts();
-  }, [posts]);
-
-  const handlePostCreated = (newPost: Post) => {
-    setPosts((prev) => [newPost, ...prev]);
+  const triggerRefresh = () => {
+    setRefreshTrigger((prev) => prev + 1); // cambia el valor para activar useEffect
   };
 
-  const handlePostClick = (post: Post) => {
-    setSelectedPost(post);
-  };
+  const handlePostClick = (post: Post) => setSelectedPost(post);
+  const handleCloseModal = () => setSelectedPost(null);
 
-  const handleCloseModal = () => {
-    setSelectedPost(null);
+  const handlePostCreated = () => {
+    triggerRefresh();
   };
 
   const handleDeletePost = async () => {
@@ -37,15 +31,21 @@ export default function ProfileContent() {
       method: "DELETE",
     });
     if (res.ok) {
-      setPosts((prev) => prev.filter((post) => post.id !== selectedPost?.id));
+      triggerRefresh(); // actualiza la galería tras eliminar
       setSelectedPost(null);
-    } else alert("Error al eliminar el post.");
+    } else {
+      alert("Error al eliminar el post.");
+    }
   };
 
   return (
     <section className="max-w-7xl mx-auto">
       <PostUploadForm onPostCreated={handlePostCreated} />
-      <ProfileGallery posts={posts} onPostClick={handlePostClick} />
+      <ProfileGallery
+        userId={userId}
+        refreshTrigger={refreshTrigger}
+        onPostClick={handlePostClick}
+      />
       <PostModal
         post={selectedPost || undefined}
         onClose={handleCloseModal}

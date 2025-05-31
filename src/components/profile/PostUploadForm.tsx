@@ -1,10 +1,10 @@
 "use client";
 
-import { useState, FormEvent } from "react";
-import { Post } from "@/types/index";
+import Image from "next/image";
+import { useState, FormEvent, useEffect } from "react";
 
 interface Props {
-  onPostCreated: (newPost: Post) => void;
+  onPostCreated: () => void;
 }
 
 export default function PostUploadForm({ onPostCreated }: Props) {
@@ -15,6 +15,19 @@ export default function PostUploadForm({ onPostCreated }: Props) {
   const [focusedField, setFocusedField] = useState<
     "title" | "description" | null
   >(null);
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!mediaFile) {
+      setPreviewUrl(null);
+      return;
+    }
+
+    const url = URL.createObjectURL(mediaFile);
+    setPreviewUrl(url);
+
+    return () => URL.revokeObjectURL(url);
+  }, [mediaFile]);
 
   const handleUpload = async (e: FormEvent) => {
     e.preventDefault();
@@ -76,10 +89,17 @@ export default function PostUploadForm({ onPostCreated }: Props) {
     });
 
     const data = await res.json();
-    onPostCreated(data.post);
-    setTitle("");
-    setDescription("");
-    setMediaFile(null);
+
+    if (!data.error) {
+      onPostCreated();
+      setTitle("");
+      setDescription("");
+      setMediaFile(null);
+      setPreviewUrl(null);
+      setOpen(false);
+    } else {
+      alert(data.error);
+    }
   };
 
   return (
@@ -102,41 +122,52 @@ export default function PostUploadForm({ onPostCreated }: Props) {
           onSubmit={handleUpload}
           className="px-6 pb-6 space-y-4 transition-all duration-300 ease-in-out"
         >
-          <input
-            type="text"
-            placeholder="Título"
-            value={title}
-            onChange={(e) =>
-              e.target.value.length <= 100 && setTitle(e.target.value)
-            }
-            onFocus={() => setFocusedField("title")}
-            onBlur={() => setFocusedField(null)}
-            className="w-full p-3 border rounded border-purple-300"
-            required
-          />
-          {focusedField === "title" && (
-            <p className="text-xs text-gray-500 text-right">
-              {100 - title.length} caracteres restantes
-            </p>
-          )}
+          {/* Título */}
+          <div>
+            <input
+              type="text"
+              placeholder="Título"
+              value={title}
+              onChange={(e) =>
+                e.target.value.length <= 100 && setTitle(e.target.value)
+              }
+              onFocus={() => setFocusedField("title")}
+              onBlur={() => setFocusedField(null)}
+              className="w-full p-3 border rounded border-purple-300"
+              required
+            />
+            <div className="h-4">
+              {focusedField === "title" && (
+                <p className="text-xs text-gray-500 text-right">
+                  {100 - title.length} caracteres restantes
+                </p>
+              )}
+            </div>
+          </div>
 
-          <textarea
-            placeholder="Descripción"
-            value={description}
-            onChange={(e) =>
-              e.target.value.length <= 300 && setDescription(e.target.value)
-            }
-            onFocus={() => setFocusedField("description")}
-            onBlur={() => setFocusedField(null)}
-            className="w-full p-3 border rounded border-purple-300"
-            required
-          />
-          {focusedField === "description" && (
-            <p className="text-xs text-gray-500 text-right">
-              {300 - description.length} caracteres restantes
-            </p>
-          )}
+          {/* Descripción */}
+          <div>
+            <textarea
+              placeholder="Descripción"
+              value={description}
+              onChange={(e) =>
+                e.target.value.length <= 300 && setDescription(e.target.value)
+              }
+              onFocus={() => setFocusedField("description")}
+              onBlur={() => setFocusedField(null)}
+              className="w-full p-3 border rounded border-purple-300"
+              required
+            />
+            <div className="h-4">
+              {focusedField === "description" && (
+                <p className="text-xs text-gray-500 text-right">
+                  {300 - description.length} caracteres restantes
+                </p>
+              )}
+            </div>
+          </div>
 
+          {/* Archivo */}
           <input
             type="file"
             accept="image/*,video/mp4,video/webm,video/x-matroska"
@@ -144,6 +175,29 @@ export default function PostUploadForm({ onPostCreated }: Props) {
             required
           />
 
+          {/* Previsualización */}
+          {previewUrl && (
+            <div className="mt-2 rounded overflow-hidden border border-gray-200">
+              {mediaFile?.type.startsWith("image") ? (
+                <Image
+                  src={previewUrl}
+                  alt="Previsualización"
+                  width={400}
+                  height={300}
+                  className="w-full h-48 object-cover"
+                />
+              ) : (
+                <video
+                  src={previewUrl}
+                  className="w-full h-48 object-cover"
+                  controls
+                  muted
+                />
+              )}
+            </div>
+          )}
+
+          {/* Botón de envío */}
           <button
             type="submit"
             className="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 transition w-full"

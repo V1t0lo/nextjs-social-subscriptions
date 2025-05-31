@@ -6,6 +6,12 @@ import { NextRequest, NextResponse } from "next/server";
 import { v2 as cloudinary } from "cloudinary";
 
 export async function GET(req: NextRequest) {
+  const session = await getServerSession(authOptions);
+
+  if (!session?.user?.id) {
+    return NextResponse.json({ error: "No autenticado" }, { status: 401 });
+  }
+
   const { searchParams } = new URL(req.url);
   const cursor = searchParams.get("cursor");
   const limit = 10;
@@ -13,12 +19,13 @@ export async function GET(req: NextRequest) {
   const posts = await prisma.post.findMany({
     take: limit + 1,
     orderBy: [{ createdAt: "desc" }, { id: "desc" }],
-    where: {},
+    where: { userId: { not: session.user.id } },
     cursor: cursor ? { id: cursor } : undefined,
     skip: cursor ? 1 : 0,
     include: {
       user: {
         select: {
+          id: true,
           name: true,
         },
       },
