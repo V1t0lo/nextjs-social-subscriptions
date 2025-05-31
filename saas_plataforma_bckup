@@ -1,0 +1,192 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 17.5
+-- Dumped by pg_dump version 17.5
+
+-- Started on 2025-05-31 13:24:16
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET transaction_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- TOC entry 219 (class 1259 OID 16616)
+-- Name: Post; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public."Post" (
+    id text NOT NULL,
+    title text,
+    description text,
+    "createdAt" timestamp(3) without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    "userId" text NOT NULL,
+    url text NOT NULL,
+    type text NOT NULL
+);
+
+
+ALTER TABLE public."Post" OWNER TO postgres;
+
+--
+-- TOC entry 218 (class 1259 OID 16437)
+-- Name: User; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public."User" (
+    id text NOT NULL,
+    email text NOT NULL,
+    name text,
+    password text NOT NULL,
+    "createdAt" timestamp(3) without time zone DEFAULT CURRENT_TIMESTAMP NOT NULL
+);
+
+
+ALTER TABLE public."User" OWNER TO postgres;
+
+--
+-- TOC entry 217 (class 1259 OID 16422)
+-- Name: _prisma_migrations; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public._prisma_migrations (
+    id character varying(36) NOT NULL,
+    checksum character varying(64) NOT NULL,
+    finished_at timestamp with time zone,
+    migration_name character varying(255) NOT NULL,
+    logs text,
+    rolled_back_at timestamp with time zone,
+    started_at timestamp with time zone DEFAULT now() NOT NULL,
+    applied_steps_count integer DEFAULT 0 NOT NULL
+);
+
+
+ALTER TABLE public._prisma_migrations OWNER TO postgres;
+
+--
+-- TOC entry 4804 (class 0 OID 16616)
+-- Dependencies: 219
+-- Data for Name: Post; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public."Post" (id, title, description, "createdAt", "userId", url, type) FROM stdin;
+5fdc667b-3640-4e5d-b356-88addde25e9b	ZXXXXXXXxasdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsdsd	asdddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd	2025-05-27 17:06:09.354	a619140e-9dee-4bbb-9680-ff4fa427ec6f	https://res.cloudinary.com/dzsbztftz/video/upload/f_mp4/v1748365556/cngnnwyhx1sjjy2mgnjb.mkv	video
+02c1bda2-458c-4ee0-9d5f-f4dc6eac17c3	OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO	OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO	2025-05-27 17:25:59.592	a619140e-9dee-4bbb-9680-ff4fa427ec6f	https://res.cloudinary.com/dzsbztftz/video/upload/f_mp4/v1748366747/truvvc8ropruqmxgm9il.mkv	video
+a7419050-92ea-4874-92a1-286827760d29	OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO	OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO	2025-05-27 17:26:15.809	a619140e-9dee-4bbb-9680-ff4fa427ec6f	https://res.cloudinary.com/dzsbztftz/image/upload/v1748366764/gceochnk08va0br0iert.jpg	image
+b8bf2c75-6451-430a-bd3e-a5d922693cef	JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN 	JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN 	2025-05-27 17:33:32.241	6483dda2-84f1-466b-961f-87fb58370be3	https://res.cloudinary.com/dzsbztftz/image/upload/v1748367201/q442zwpthmmnfui0v3pj.png	image
+bf3ec757-d970-4092-9fbc-83902d0a7fe1	Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo 	Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo puit9	2025-05-28 10:15:17.287	d9bab39a-3067-45c0-a31f-44ca17c71f43	https://res.cloudinary.com/dzsbztftz/image/upload/v1748427306/amrrwidg5ghtb48rqy31.png	image
+6497309b-ce0d-4dc6-bcf2-0cef58f13738	Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo 	Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo 	2025-05-28 10:16:07.447	d9bab39a-3067-45c0-a31f-44ca17c71f43	https://res.cloudinary.com/dzsbztftz/image/upload/v1748427356/rkuqo6xctumwqgyoutkv.png	image
+595738e9-a35f-4741-9764-331a198526f4	Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo MAAanolo Manolo Manolo 	Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo AAAAAA	2025-05-28 10:17:07.25	d9bab39a-3067-45c0-a31f-44ca17c71f43	https://res.cloudinary.com/dzsbztftz/image/upload/v1748427416/cyyffk7q89qhyr94wsre.png	image
+7981b041-4ec3-4452-8de1-781aa42f3076	Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo VV	Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo Manolo VVVVVV	2025-05-28 10:17:58.338	d9bab39a-3067-45c0-a31f-44ca17c71f43	https://res.cloudinary.com/dzsbztftz/image/upload/v1748427467/rtnlflgfswqheezlxvyq.png	image
+c4448abd-18c3-4649-9e2d-d6dcba6ec4c2	JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN 	JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN 	2025-05-28 10:19:25.224	6483dda2-84f1-466b-961f-87fb58370be3	https://res.cloudinary.com/dzsbztftz/image/upload/v1748427554/amgkuqcdyhbmeg2smunv.png	image
+fa536b24-9483-475d-9709-f3af02cb9f05	JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN 	JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN 	2025-05-28 10:19:42.132	6483dda2-84f1-466b-961f-87fb58370be3	https://res.cloudinary.com/dzsbztftz/image/upload/v1748427571/gsvoinv3jyyvte4fertb.png	image
+0363cd3c-1a07-4a60-a063-d96d426c9966	JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN 	JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN 	2025-05-28 10:20:22.347	6483dda2-84f1-466b-961f-87fb58370be3	https://res.cloudinary.com/dzsbztftz/image/upload/v1748427611/br9uqqxtgzipvfbrdqd7.png	image
+6630575b-35c2-477d-91a0-6b88f5ea09d2	JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN 	JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN JUAN 	2025-05-28 10:26:19.471	6483dda2-84f1-466b-961f-87fb58370be3	https://res.cloudinary.com/dzsbztftz/image/upload/v1748427968/l31jsjpx3eetvajpsyla.png	image
+21056292-d17e-4dbd-89b3-55965af82bea	asdsaddddddddddd	asdasdddddddddd	2025-05-30 11:14:28.517	a619140e-9dee-4bbb-9680-ff4fa427ec6f	https://res.cloudinary.com/dzsbztftz/image/upload/v1748603657/oephuvwjhfjggamw9lrm.png	image
+8f0545aa-e3c3-4171-8c10-733c7c0e4f7e	admintest admin@exp.comadmintest admin@exp.comadmintest admin@exp.comadmintest admin@exp.com	admintest\nadmin@exp.comadmintest\nadmin@exp.comadmintest\nadmin@exp.comadmintest\nadmin@exp.comadmintest\nadmin@exp.comadmintest\nadmin@exp.comadmintest\nadmin@exp.comadmintest\nadmin@exp.comadmintest\nadmin@exp.comadmintest\nadmin@exp.comadmintest\nadmin@exp.comadmintest\nadmin@exp.comadmintest\nadmin@exp.com	2025-05-30 11:23:44.003	a619140e-9dee-4bbb-9680-ff4fa427ec6f	https://res.cloudinary.com/dzsbztftz/image/upload/v1748604213/hkzcevxilgmnljxfu3gi.png	image
+aaa7cddc-7b81-4353-b43c-c381122e18aa	datadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadata	datadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadatadata	2025-05-30 11:24:25.679	a619140e-9dee-4bbb-9680-ff4fa427ec6f	https://res.cloudinary.com/dzsbztftz/image/upload/v1748604255/z8gqt3wxo04g2wxeyjfl.png	image
+755b4abf-01c9-42ae-b872-2e2eeee70d36	ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST 	ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST 	2025-05-30 11:27:34.428	a619140e-9dee-4bbb-9680-ff4fa427ec6f	https://res.cloudinary.com/dzsbztftz/image/upload/v1748604443/cqjkmnygzc5ce26ipomj.png	image
+e6258787-ab2b-40a1-b063-951add63933c	ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST 	ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST 	2025-05-30 11:27:50.203	a619140e-9dee-4bbb-9680-ff4fa427ec6f	https://res.cloudinary.com/dzsbztftz/image/upload/v1748604459/kodf1siv8fsrp2ank3l8.png	image
+bbf2aea4-685a-48e4-bdcc-5086b776e719	ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST 	ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST 	2025-05-30 11:28:06.278	a619140e-9dee-4bbb-9680-ff4fa427ec6f	https://res.cloudinary.com/dzsbztftz/image/upload/v1748604475/uokg6zudqh0kowfyasky.png	image
+188ff942-9b48-45d7-bb98-86438aac3093	ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST 	ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST 	2025-05-30 11:28:25.752	a619140e-9dee-4bbb-9680-ff4fa427ec6f	https://res.cloudinary.com/dzsbztftz/image/upload/v1748604495/lsaecpbg3snqefat8cdu.png	image
+f73fc8da-68de-48e4-a5cc-c2c2fea25664	ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST 	ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST 	2025-05-30 11:28:58.367	a619140e-9dee-4bbb-9680-ff4fa427ec6f	https://res.cloudinary.com/dzsbztftz/image/upload/v1748604527/mwl1n0eh0k7wdbkm74yp.png	image
+8a44c252-483e-4d50-9185-0c96517cd79b	ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST 	ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST 	2025-05-30 11:29:11.28	a619140e-9dee-4bbb-9680-ff4fa427ec6f	https://res.cloudinary.com/dzsbztftz/image/upload/v1748604540/wy32yv7fqf22zublbh6f.png	image
+03ec31a3-5828-437f-8fbe-086529680b5b	ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST 	ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST 	2025-05-30 11:30:48.958	a619140e-9dee-4bbb-9680-ff4fa427ec6f	https://res.cloudinary.com/dzsbztftz/image/upload/v1748604637/seqkrclo3hpvfyx2p1ca.png	image
+8ddc2035-e0f9-4789-b0bd-499f11083f26	ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST 	ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST ADMINTEST 	2025-05-30 11:31:03.025	a619140e-9dee-4bbb-9680-ff4fa427ec6f	https://res.cloudinary.com/dzsbztftz/image/upload/v1748604652/ho9nkn6oampapbzz2prn.png	image
+91e7c039-2e4d-4881-9b39-2ba254c8565d	import Image from "next/image";import Image from "next/image";import Image from "next/image";	import Image from "next/image";\nimport Image from "next/image";\nimport Image from "next/image";\nimport Image from "next/image";\nimport Image from "next/image";\nimport Image from "next/image";\nimport Image from "next/image";\nimport Image from "next/image";\nimport Image from "next/image";\n	2025-05-30 11:42:57.157	a619140e-9dee-4bbb-9680-ff4fa427ec6f	https://res.cloudinary.com/dzsbztftz/image/upload/v1748605366/lwnhpxa3nzrrhs4pxkqw.png	image
+36abe1a1-5e7a-4634-be91-86a5fb0bc1f1	import Image from "next/image";import Image from "next/image";import Image from "next/image";	import Image from "next/image";import Image from "next/image";import Image from "next/image";import Image from "next/image";import Image from "next/image";import Image from "next/image";import Image from "next/image";import Image from "next/image";import Image from "next/image";	2025-05-30 11:43:31.23	a619140e-9dee-4bbb-9680-ff4fa427ec6f	https://res.cloudinary.com/dzsbztftz/image/upload/v1748605400/ikit2aowgguhovmvb7a6.png	image
+\.
+
+
+--
+-- TOC entry 4803 (class 0 OID 16437)
+-- Dependencies: 218
+-- Data for Name: User; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public."User" (id, email, name, password, "createdAt") FROM stdin;
+a619140e-9dee-4bbb-9680-ff4fa427ec6f	admin@exp.com	admintest	$2b$10$yJrnWYbwF4EJYnineSACFuE5zrRNRtj7holKciFiCtsDqEsqx3Wb6	2025-05-23 17:23:55.51
+6483dda2-84f1-466b-961f-87fb58370be3	juan@exp.com	Juan 	$2b$10$TLVYI5hv/8ZfnZeLGh5LnO1hu/yhssQe.03VqOSfRp/p6uhrXna22	2025-05-27 17:31:18.005
+9d96ee6f-c6a0-4f83-bcc6-4512306bac7c	pepe@exp.com	Pepe	$2b$10$G74Zcm9WrFfVXB2rOStoxee3OqPl6FHG5R4xRhEaiVLcoBwXdgX4.	2025-05-27 18:09:37.438
+d9bab39a-3067-45c0-a31f-44ca17c71f43	manolo@exp.com	Manolo	$2b$10$lXYoyEdHD/UACW8FUtgeaOmoyQMPHo5Yp0M/ocpF0JxDf7KfUTqUK	2025-05-28 10:14:16.577
+1fc711e8-caeb-47c4-8bd6-a3467e9d8bca	popo@exp.com	PoPo	$2b$10$kQLtAEY6odVZiQrb3lLKRuUAmwK6qf.5nwLB7BTAGgmnaia6Swz0.	2025-05-28 14:25:57.948
+\.
+
+
+--
+-- TOC entry 4802 (class 0 OID 16422)
+-- Dependencies: 217
+-- Data for Name: _prisma_migrations; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public._prisma_migrations (id, checksum, finished_at, migration_name, logs, rolled_back_at, started_at, applied_steps_count) FROM stdin;
+f8649ab0-0f28-40e1-b02b-2529495975b4	2946862c4a17733761e8f8a52c21bf943cc34b3bc47744ceaba2b23a6a3b93b0	2025-05-23 18:43:28.644818+02	20250523164328_init	\N	\N	2025-05-23 18:43:28.619362+02	1
+cb5eead1-102c-4a2b-9070-2e8ef122d218	a87af86d1bb92f5410025b3fbf0b2ee9608d1b4b179800ef1f6c4bd12617f23a	2025-05-24 22:26:58.268176+02	20250524202657_add_post_model	\N	\N	2025-05-24 22:26:58.249373+02	1
+b88fb70c-85f3-4e20-a1fe-2b0372b3eaea	03b52b733aa26bc12dee9228e66b35393eca8b7ba8865a6c06ac0ac30b0daacc	2025-05-24 22:29:35.825828+02	20250524202935_add_post_model	\N	\N	2025-05-24 22:29:35.822652+02	1
+2d66b38d-6b71-4aaa-b267-19e88e395dbb	e0aff9e016b4e06572e4bf38b6d0972b4a387c122132f4d7911096ca0ddb6eef	2025-05-27 16:08:32.432753+02	20250527140832_rename_image_to_post	\N	\N	2025-05-27 16:08:32.424603+02	1
+\.
+
+
+--
+-- TOC entry 4655 (class 2606 OID 16623)
+-- Name: Post Post_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."Post"
+    ADD CONSTRAINT "Post_pkey" PRIMARY KEY (id);
+
+
+--
+-- TOC entry 4653 (class 2606 OID 16444)
+-- Name: User User_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."User"
+    ADD CONSTRAINT "User_pkey" PRIMARY KEY (id);
+
+
+--
+-- TOC entry 4650 (class 2606 OID 16430)
+-- Name: _prisma_migrations _prisma_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public._prisma_migrations
+    ADD CONSTRAINT _prisma_migrations_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 4651 (class 1259 OID 16461)
+-- Name: User_email_key; Type: INDEX; Schema: public; Owner: postgres
+--
+
+CREATE UNIQUE INDEX "User_email_key" ON public."User" USING btree (email);
+
+
+--
+-- TOC entry 4656 (class 2606 OID 16624)
+-- Name: Post Post_userId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public."Post"
+    ADD CONSTRAINT "Post_userId_fkey" FOREIGN KEY ("userId") REFERENCES public."User"(id) ON UPDATE CASCADE ON DELETE RESTRICT;
+
+
+-- Completed on 2025-05-31 13:24:16
+
+--
+-- PostgreSQL database dump complete
+--
+
