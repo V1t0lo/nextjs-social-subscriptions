@@ -1,36 +1,80 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Cre8Net – Social & Monetization Platform for Creators
 
-## Getting Started
+Cre8Net es una plataforma social en desarrollo pensada para creadores de contenido. Permite compartir publicaciones, crear perfiles personales y monetizar contenido mediante **suscripciones** y **ventas directas** de recursos (como cursos, archivos o carpetas, material exclusivo, etc.).
 
-First, run the development server:
+Inspirada en redes como **Twitter** o **LinkedIn**, y con un modelo de monetización tipo **Patreon**, Cre8Net combina funcionalidades sociales con herramientas de pago modernas.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+---
+
+## 🚀 Tecnologías utilizadas
+
+- **Next.js** 15
+- **React** 19
+- **Prisma** + **PostgreSQL**
+- **Tailwind CSS**
+- **NextAuth** (autenticación)
+- **Cloudinary** (gestión de imágenes)
+- **Lucide React** (íconos)
+- **Stripe** (pagos con tarjeta) [por implementar]
+- **Criptomonedas** (pagos con criptomonedas) [por implementar]
+- **TypeScript**
+- **Vite** _(estructural/configuración complementaria)_
+
+---
+
+## 📦 Dependencias principales
+
+```json
+"@prisma/client": "^6.8.2",
+"bcrypt": "^6.0.0",
+"cloudinary": "^2.6.1",
+"lucide-react": "^0.511.0",
+"next": "15.1.8",
+"next-auth": "^4.24.11",
+"next-cloudinary": "^6.16.0",
+"react": "^19.0.0",
+"react-dom": "^19.0.0"
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🧪 Estado del proyecto
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+**ALFA** – En desarrollo activo.  
+Este proyecto está pensado como **portafolio profesional** y presentación para plataformas de **freelancing**.
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 🧩 Funcionalidades actuales
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Página de inicio con registro e inicio de sesión (NextAuth)
+- Feed público de publicaciones de todos los usuarios
+- Página de perfil personal del usuario
+- Gestión de imágenes con Cloudinary
+- Estructura de backend con Prisma y PostgreSQL
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## 🔜 Roadmap futuro
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- Sistema de suscripciones (Stripe)
+- Pagos únicos por recursos digitales (cursos, archivos, etc.)
+- Soporte para pagos con criptomonedas
+- Comentarios y reacciones
+- Búsqueda de usuarios y contenido
+- Panel de administrador y analytics para creadores
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## 👨‍💻 Autor
+
+**Víctor Caaveiro**  
+🔗 [LinkedIn](https://www.linkedin.com/in/victor-caaveiro-diaz)
+
+---
+
+## 📝 Licencia
+
+Este proyecto se encuentra bajo licencia **MIT**. Libre para usar y modificar con fines personales o profesionales.
+
+---
