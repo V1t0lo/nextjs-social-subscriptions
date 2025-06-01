@@ -130,12 +130,47 @@ exports.Prisma.UserScalarFieldEnum = {
 
 exports.Prisma.PostScalarFieldEnum = {
   id: 'id',
-  url: 'url',
-  type: 'type',
   title: 'title',
   description: 'description',
+  mediaUrl: 'mediaUrl',
+  mediaType: 'mediaType',
+  createdAt: 'createdAt',
   userId: 'userId',
+  contentId: 'contentId'
+};
+
+exports.Prisma.ContentScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  description: 'description',
+  type: 'type',
+  url: 'url',
+  createdAt: 'createdAt',
+  accessLevel: 'accessLevel',
+  price: 'price',
+  userId: 'userId'
+};
+
+exports.Prisma.PurchaseScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  contentId: 'contentId',
   createdAt: 'createdAt'
+};
+
+exports.Prisma.FollowScalarFieldEnum = {
+  id: 'id',
+  followerId: 'followerId',
+  followedId: 'followedId',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.SubscriptionScalarFieldEnum = {
+  id: 'id',
+  subscriberId: 'subscriberId',
+  subscribedToId: 'subscribedToId',
+  createdAt: 'createdAt',
+  expiresAt: 'expiresAt'
 };
 
 exports.Prisma.SortOrder = {
@@ -152,11 +187,20 @@ exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
-
+exports.AccessLevel = exports.$Enums.AccessLevel = {
+  PUBLIC: 'PUBLIC',
+  SUBSCRIBERS: 'SUBSCRIBERS',
+  FOLLOWERS_PLUS: 'FOLLOWERS_PLUS',
+  SUBSCRIBERS_PLUS: 'SUBSCRIBERS_PLUS'
+};
 
 exports.Prisma.ModelName = {
   User: 'User',
-  Post: 'Post'
+  Post: 'Post',
+  Content: 'Content',
+  Purchase: 'Purchase',
+  Follow: 'Follow',
+  Subscription: 'Subscription'
 };
 
 /**

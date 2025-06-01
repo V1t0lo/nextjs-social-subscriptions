@@ -14,22 +14,99 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum AccessLevel {
+  PUBLIC
+  SUBSCRIBERS // Solo suscriptores
+  FOLLOWERS_PLUS // Seguidores que pagan individualmente
+  SUBSCRIBERS_PLUS // Suscriptores que además pagan extra
+}
+
 model User {
   id        String   @id @default(uuid())
   email     String   @unique
   name      String?
   password  String
   createdAt DateTime @default(now())
+
   posts     Post[]
+  contents  Content[]
+  purchases Purchase[]
+
+  followers     Follow[]       @relation("Followed")
+  following     Follow[]       @relation("Follower")
+  subscriptions Subscription[] @relation("Subscriber")
+  subscribers   Subscription[] @relation("SubscribedTo")
 }
 
 model Post {
   id          String   @id @default(uuid())
-  url         String
-  type        String // 'image' o 'video'
   title       String?
   description String?
-  user        User     @relation(fields: [userId], references: [id])
-  userId      String
+  mediaUrl    String? // Imagen o video adjunto (opcional)
+  mediaType   String? // 'image' | 'video'
   createdAt   DateTime @default(now())
+
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
+
+  content   Content? @relation(fields: [contentId], references: [id])
+  contentId String?
+}
+
+model Content {
+  id          String   @id @default(uuid())
+  title       String?
+  description String?
+  type        String // 'image' | 'video' | 'audio'
+  url         String
+  createdAt   DateTime @default(now())
+
+  accessLevel AccessLevel @default(SUBSCRIBERS)
+  price       Float?
+
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
+
+  posts     Post[]
+  purchases Purchase[]
+}
+
+model Purchase {
+  id     String @id @default(uuid())
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
+
+  content   Content @relation(fields: [contentId], references: [id])
+  contentId String
+
+  createdAt DateTime @default(now())
+
+  @@unique([userId, contentId])
+}
+
+model Follow {
+  id         String @id @default(uuid())
+  follower   User   @relation("Follower", fields: [followerId], references: [id])
+  followerId String
+
+  followed   User   @relation("Followed", fields: [followedId], references: [id])
+  followedId String
+
+  createdAt DateTime @default(now())
+
+  @@unique([followerId, followedId])
+}
+
+model Subscription {
+  id           String @id @default(uuid())
+  subscriber   User   @relation("Subscriber", fields: [subscriberId], references: [id])
+  subscriberId String
+
+  subscribedTo   User   @relation("SubscribedTo", fields: [subscribedToId], references: [id])
+  subscribedToId String
+
+  createdAt DateTime @default(now())
+  expiresAt DateTime
+
+  @@unique([subscriberId, subscribedToId])
 }
