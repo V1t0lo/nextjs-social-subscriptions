@@ -3,10 +3,11 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
+import LoadingButton from "@/components/layout/LoadingButton";
 
 export default function LoginPage() {
   const router = useRouter();
-
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [errors, setErrors] = useState<{ email?: string; password?: string }>(
     {}
@@ -27,23 +28,33 @@ export default function LoginPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (loading) return;
+
     const newErrors = validate();
     if (Object.keys(newErrors).length > 0) return setErrors(newErrors);
 
-    const res = await signIn("credentials", {
-      redirect: false,
-      email: formData.email,
-      password: formData.password,
-    });
+    setLoading(true);
 
-    //TODO: Cambiar manejo de respuesta y solicitud, agregar loading.. y anadir mensaje de error principal arriba del boton
-
-    if (!res?.ok) {
-      setMessage("Credenciales inválidas");
-    } else {
-      setMessage("Usuario registrado.");
-      setErrors({ email: "", password: "" }); // limpiar errores
-      router.push("/feed");
+    try {
+      const res = await signIn("credentials", {
+        redirect: false,
+        email: formData.email,
+        password: formData.password,
+      });
+  
+      //TODO: Cambiar manejo de respuesta y solicitud, agregar loading.. y anadir mensaje de error principal arriba del boton
+  
+      if (!res?.ok) {
+        setMessage("Credenciales inválidas");
+      } else {
+        setMessage("Usuario registrado.");
+        setErrors({ email: "", password: "" }); // limpiar errores
+        router.push("/feed");
+      }
+    } catch (error) {
+      alert(error)
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -86,12 +97,9 @@ export default function LoginPage() {
           )}
         </div>
 
-        <button
-          type="submit"
-          className="w-full bg-purple-600 text-white p-3 rounded hover:bg-purple-700 transition font-semibold"
-        >
+        <LoadingButton type="submit" loading={loading} className="w-full">
           Entrar
-        </button>
+        </LoadingButton>
 
         {message && (
           <p className="text-center text-sm text-purple-700 font-medium">

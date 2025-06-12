@@ -3,57 +3,15 @@ import { prisma } from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
 import { v2 as cloudinary } from "cloudinary";
 
-export async function GET(req: NextRequest) {
-  const { searchParams } = new URL(req.url);
-  const cursor = searchParams.get("cursor");
-  const userId = searchParams.get("userId");
-  const limit = 10;
-
-  if (!userId) {
-      return NextResponse.json(
-        { error: "Falta identificador" },
-        { status: 400 }
-      );
-    }
-
-  const posts = await prisma.post.findMany({
-    take: limit + 1,
-    orderBy: [{ createdAt: "desc" }, { id: "desc" }],
-    where: { userId: { not: userId } },
-    cursor: cursor ? { id: cursor } : undefined,
-    skip: cursor ? 1 : 0,
-    include: {
-      user: {
-        select: {
-          id: true,
-          name: true,
-        },
-      },
-    },
-  });
-
-  const hasMore = posts.length > limit;
-  const slicedPosts = hasMore ? posts.slice(0, -1) : posts;
-
-  return NextResponse.json({
-    posts: slicedPosts,
-    nextCursor: hasMore ? slicedPosts[slicedPosts.length - 1].createdAt : null,
-  });
-}
-
 export async function POST(req: Request) {
-  const { title, description, url, type, email } = await req.json();
+  const { title, description, url, type, userId } = await req.json();
 
   if (!url || !type) {
     return NextResponse.json({ error: "Missing url or type" }, { status: 400 });
   }
 
-  const user = await prisma.user.findUnique({
-    where: { email: email },
-  });
-
-  if (!user) {
-    return NextResponse.json({ error: "User not found" }, { status: 404 });
+  if (!userId){
+    return NextResponse.json({ error: "Missing user ID" }, { status: 400 });
   }
 
   const post = await prisma.post.create({
@@ -62,7 +20,7 @@ export async function POST(req: Request) {
       mediaType: type,
       title,
       description,
-      userId: user.id,
+      userId: userId,
     },
   });
 

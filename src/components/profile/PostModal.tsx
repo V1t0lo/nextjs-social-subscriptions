@@ -27,9 +27,9 @@ export default function PostModal({ post, onClose, onDelete }: Props) {
         </h2>
         <p className="text-gray-600 mb-4 break-words">{post.description}</p>
 
-        {post.type === "image" ? (
+        {post.mediaType === "image" ? (
           <Image
-            src={post.url}
+            src={post.mediaUrl}
             alt={post.title}
             width={600}
             height={400}
@@ -37,7 +37,7 @@ export default function PostModal({ post, onClose, onDelete }: Props) {
           />
         ) : (
           <video
-            src={post.url}
+            src={post.mediaUrl}
             controls
             className="w-full max-h-[60vh] rounded mb-4"
           />

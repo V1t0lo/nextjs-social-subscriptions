@@ -2,12 +2,15 @@
 
 import Image from "next/image";
 import { useState, FormEvent, useEffect } from "react";
+import LoadingButton from "@/components/layout/LoadingButton";
 
 interface Props {
+  userId: string
   onPostCreated: () => void;
 }
 
-export default function PostUploadForm({ onPostCreated }: Props) {
+export default function PostUploadForm({ userId, onPostCreated }: Props) {
+  const [loading, setLoading] = useState(false);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [mediaFile, setMediaFile] = useState<File | null>(null);
@@ -31,74 +34,84 @@ export default function PostUploadForm({ onPostCreated }: Props) {
 
   const handleUpload = async (e: FormEvent) => {
     e.preventDefault();
+    if (loading) return;
 
-    if (title.trim().length < 3 || title.length > 100) {
-      return alert("El título debe tener entre 3 y 100 caracteres.");
-    }
+    setLoading(true);
 
-    if (description.trim().length < 10 || description.length > 500) {
-      return alert("La descripción debe tener entre 10 y 500 caracteres.");
-    }
+    try {
+      if (title.trim().length < 3 || title.length > 100) {
+        return alert("El título debe tener entre 3 y 100 caracteres.");
+      }
 
-    if (!mediaFile) return alert("Debes seleccionar una imagen o video.");
+      if (description.trim().length < 10 || description.length > 500) {
+        return alert("La descripción debe tener entre 10 y 500 caracteres.");
+      }
 
-    const validTypes = [
-      "image/jpeg",
-      "image/png",
-      "image/webp",
-      "video/mp4",
-      "video/webm",
-      "video/x-matroska",
-    ];
-    if (!validTypes.includes(mediaFile.type)) {
-      return alert("Tipo de archivo no permitido.");
-    }
+      if (!mediaFile) return alert("Debes seleccionar una imagen o video.");
 
-    const maxSizeMB = 50;
-    if (mediaFile.size > maxSizeMB * 1024 * 1024) {
-      return alert(`El archivo debe pesar menos de ${maxSizeMB}MB.`);
-    }
+      const validTypes = [
+        "image/jpeg",
+        "image/png",
+        "image/webp",
+        "video/mp4",
+        "video/webm",
+        "video/x-matroska",
+      ];
+      if (!validTypes.includes(mediaFile.type)) {
+        return alert("Tipo de archivo no permitido.");
+      }
 
-    const isVideo = mediaFile.type.startsWith("video");
-    const formData = new FormData();
-    formData.append("file", mediaFile);
-    formData.append(
-      "upload_preset",
-      process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET!
-    );
+      const maxSizeMB = 50;
+      if (mediaFile.size > maxSizeMB * 1024 * 1024) {
+        return alert(`El archivo debe pesar menos de ${maxSizeMB}MB.`);
+      }
 
-    const uploadUrl = `https://api.cloudinary.com/v1_1/${
-      process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME
-    }/${isVideo ? "video" : "image"}/upload`;
+      const isVideo = mediaFile.type.startsWith("video");
+      const formData = new FormData();
+      formData.append("file", mediaFile);
+      formData.append(
+        "upload_preset",
+        process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET!
+      );
 
-    const cloudRes = await fetch(uploadUrl, { method: "POST", body: formData });
-    const cloudData = await cloudRes.json();
-    const url = isVideo
-      ? cloudData.secure_url.replace("/upload/", "/upload/f_mp4/")
-      : cloudData.secure_url;
+      const uploadUrl = `https://api.cloudinary.com/v1_1/${
+        process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME
+      }/${isVideo ? "video" : "image"}/upload`;
 
-    const res = await fetch("/api/post", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        title,
-        description,
-        url,
-        type: isVideo ? "video" : "image",
-      }),
-    });
+      const cloudRes = await fetch(uploadUrl, { method: "POST", body: formData });
+      const cloudData = await cloudRes.json();
+      const url = isVideo
+        ? cloudData.secure_url.replace("/upload/", "/upload/f_mp4/")
+        : cloudData.secure_url;
 
-    const data = await res.json();
+      const res = await fetch("/api/post", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          title,
+          description,
+          url,
+          type: isVideo ? "video" : "image",
+          userId: userId,
+        }),
+      });
 
-    if (!data.error) {
-      onPostCreated();
-      setTitle("");
-      setDescription("");
-      setMediaFile(null);
-      setPreviewUrl(null);
-      setOpen(false);
-    } else {
-      alert(data.error);
+      const data = await res.json();
+
+      if (!data.error) {
+        onPostCreated();
+        setTitle("");
+        setDescription("");
+        setMediaFile(null);
+        setPreviewUrl(null);
+        setOpen(false);
+      } else {
+        alert(data.error);
+      }
+    } catch (error){
+      alert(error)
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -198,12 +211,10 @@ export default function PostUploadForm({ onPostCreated }: Props) {
           )}
 
           {/* Botón de envío */}
-          <button
-            type="submit"
-            className="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 transition w-full"
-          >
+          <LoadingButton type="submit" loading={loading} className="w-full">
             Subir publicación
-          </button>
+          </LoadingButton>
+
         </form>
       )}
     </div>

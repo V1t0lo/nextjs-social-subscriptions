@@ -51,6 +51,9 @@ model Post {
 
   content   Content? @relation(fields: [contentId], references: [id])
   contentId String?
+
+  @@unique([createdAt, id])
+  @@index([createdAt, id])
 }
 
 model Content {

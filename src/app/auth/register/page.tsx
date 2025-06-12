@@ -3,9 +3,11 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
+import LoadingButton from "@/components/layout/LoadingButton";
 
 export default function RegisterPage() {
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
     name: "",
@@ -43,38 +45,47 @@ export default function RegisterPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (loading) return;
 
     if (!validate()) return;
 
-    const res = await fetch("/api/register", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(formData),
-    });
+    setLoading(true);
 
-    //TODO: Cambiar manejo de respuesta y solicitud, agregar loading.. y anadir mensaje de error principal arriba del boton
-
-    const data = await res.json();
-    if (!res.ok) {
-      if (data.error?.includes("registrado")) {
-        setErrors((prev) => ({ ...prev, email: data.error }));
-      } else {
-        setMessage(data.error || "Error al registrar");
-      }
-    } else {
-      setMessage("Usuario creado.");
-      setErrors({ email: "", password: "" }); // limpiar errores
-      const signInResult = await signIn("credentials", {
-        redirect: false, // evitar redirección automática
-        email: formData.email,
-        password: formData.password,
+    try {
+      const res = await fetch("/api/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
       });
-
-      if (signInResult?.ok) {
-        router.push("/profile"); // redirigir manualmente después del login exitoso
+  
+      //TODO: Cambiar manejo de respuesta y solicitud, agregar loading.. y anadir mensaje de error principal arriba del boton
+  
+      const data = await res.json();
+      if (!res.ok) {
+        if (data.error?.includes("registrado")) {
+          setErrors((prev) => ({ ...prev, email: data.error }));
+        } else {
+          setMessage(data.error || "Error al registrar");
+        }
       } else {
-        setMessage("Error al iniciar sesión automáticamente");
+        setMessage("Usuario creado.");
+        setErrors({ email: "", password: "" }); // limpiar errores
+        const signInResult = await signIn("credentials", {
+          redirect: false, // evitar redirección automática
+          email: formData.email,
+          password: formData.password,
+        });
+  
+        if (signInResult?.ok) {
+          router.push("/profile"); // redirigir manualmente después del login exitoso
+        } else {
+          setMessage("Error al iniciar sesión automáticamente");
+        }
       }
+    } catch (error) {
+      alert(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -128,12 +139,9 @@ export default function RegisterPage() {
           )}
         </div>
 
-        <button
-          type="submit"
-          className="w-full bg-purple-600 text-white p-3 rounded hover:bg-purple-700 transition font-semibold"
-        >
+        <LoadingButton type="submit" loading={loading} className="w-full">
           Registrarse
-        </button>
+        </LoadingButton>
 
         {message && (
           <p className="text-center text-sm text-purple-700 font-medium">

@@ -91,9 +91,9 @@ export default function ProfileGallery({
                 className="cursor-pointer hover:shadow-md transition"
                 onClick={() => onPostClick(post)}
               >
-                {post.type === "image" ? (
+                {post.mediaType === "image" ? (
                   <Image
-                    src={post.url}
+                    src={post.mediaUrl}
                     alt={post.title}
                     width={400}
                     height={300}
@@ -101,7 +101,7 @@ export default function ProfileGallery({
                   />
                 ) : (
                   <video
-                    src={post.url}
+                    src={post.mediaUrl}
                     className="w-full h-48 object-cover rounded"
                     muted
                     preload="metadata"

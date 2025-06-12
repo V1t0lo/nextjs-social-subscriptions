@@ -27,7 +27,7 @@ export default function ProfileContent({ userId }: ProfileContentProps) {
   };
 
   const handleDeletePost = async () => {
-    const res = await fetch(`/api/post?id=${selectedPost?.id}`, {
+    const res = await fetch(`/api/post?id=${selectedPost?.id}&userId=${userId}`, {
       method: "DELETE",
     });
     if (res.ok) {
@@ -40,7 +40,10 @@ export default function ProfileContent({ userId }: ProfileContentProps) {
 
   return (
     <section className="max-w-7xl mx-auto">
-      <PostUploadForm onPostCreated={handlePostCreated} />
+      <PostUploadForm 
+        userId={userId} 
+        onPostCreated={handlePostCreated} 
+      />
       <ProfileGallery
         userId={userId}
         refreshTrigger={refreshTrigger}

@@ -8494,6 +8494,7 @@ export namespace Prisma {
 
   export type PostWhereUniqueInput = Prisma.AtLeast<{
     id?: string
+    createdAt_id?: PostCreatedAtIdCompoundUniqueInput
     AND?: PostWhereInput | PostWhereInput[]
     OR?: PostWhereInput[]
     NOT?: PostWhereInput | PostWhereInput[]
@@ -8506,7 +8507,7 @@ export namespace Prisma {
     contentId?: StringNullableFilter<"Post"> | string | null
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     content?: XOR<ContentNullableScalarRelationFilter, ContentWhereInput> | null
-  }, "id">
+  }, "id" | "createdAt_id">
 
   export type PostOrderByWithAggregationInput = {
     id?: SortOrder
@@ -9362,6 +9363,11 @@ export namespace Prisma {
   export type ContentNullableScalarRelationFilter = {
     is?: ContentWhereInput | null
     isNot?: ContentWhereInput | null
+  }
+
+  export type PostCreatedAtIdCompoundUniqueInput = {
+    createdAt: Date | string
+    id: string
   }
 
   export type PostCountOrderByAggregateInput = {
