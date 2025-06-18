@@ -6,12 +6,14 @@ import { useCallback, useEffect, useRef, useState } from "react";
 
 interface Props {
   userId: string;
+  isOwnProfile: boolean;
   refreshTrigger: number;
   onPostClick: (post: Post) => void;
 }
 
 export default function ProfileGallery({
   userId,
+  isOwnProfile,
   refreshTrigger,
   onPostClick,
 }: Props) {
@@ -76,7 +78,7 @@ export default function ProfileGallery({
   return (
     <div>
       <h3 className="text-xl font-semibold text-gray-700 mb-4">
-        Tus publicaciones
+        {isOwnProfile ? "Tus publicaciones" : "Publicaciones"}
       </h3>
       {posts.length === 0 ? (
         <p className="text-gray-500">Aún no has subido publicaciones.</p>

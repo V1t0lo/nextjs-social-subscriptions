@@ -97,7 +97,7 @@ model Follow {
 
   createdAt DateTime @default(now())
 
-  @@unique([followerId, followedId])
+  @@unique([followerId, followedId], name: "followerId_followedId")
 }
 
 model Subscription {
@@ -111,5 +111,5 @@ model Subscription {
   createdAt DateTime @default(now())
   expiresAt DateTime
 
-  @@unique([subscriberId, subscribedToId])
+  @@unique([subscriberId, subscribedToId], name: "subscriberId_subscribedToId")
 }

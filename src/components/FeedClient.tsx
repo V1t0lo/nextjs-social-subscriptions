@@ -55,14 +55,16 @@ export default function Feed({ session }: { session: Session }) {
       } else {
         setPosts((prev) => {
           const existingIds = new Set(prev.map((p) => p.id));
-          const newPosts = data.posts.filter((p: Post) => !existingIds.has(p.id));
+          const newPosts = data.posts.filter(
+            (p: Post) => !existingIds.has(p.id)
+          );
           return [...prev, ...newPosts];
         });
 
         if (!data.nextCursor) {
           setHasMore(false);
         }
-        }
+      }
     } catch (error) {
       console.error("Error fetching posts:", error);
     }
@@ -96,8 +98,14 @@ export default function Feed({ session }: { session: Session }) {
               ref={isLast ? lastPostRef : null}
               className="bg-white shadow rounded-xl border border-gray-200 p-4 space-y-2"
             >
-              <div className="text-sm text-gray-500">
-                {post.user.name} – {new Date(post.createdAt).toLocaleString()}
+              <div className="flex justify-between items-center text-sm text-gray-500">
+                <Link
+                  href={`/profile/${post.user.id}`}
+                  className="text-purple-600 hover:underline font-medium"
+                >
+                  {post.user.name}
+                </Link>
+                <span>{new Date(post.createdAt).toLocaleString()}</span>
               </div>
               <h2 className="text-lg font-semibold text-gray-800 break-words">
                 {post.title}

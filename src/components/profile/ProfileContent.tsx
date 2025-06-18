@@ -9,9 +9,10 @@ import { Post } from "@/types";
 
 interface ProfileContentProps {
   userId: string;
+  isOwnProfile: boolean;
 }
 
-export default function ProfileContent({ userId }: ProfileContentProps) {
+export default function ProfileContent({ userId, isOwnProfile }: ProfileContentProps) {
   const [refreshTrigger, setRefreshTrigger] = useState(0);
   const [selectedPost, setSelectedPost] = useState<Post | null>(null);
 
@@ -40,17 +41,21 @@ export default function ProfileContent({ userId }: ProfileContentProps) {
 
   return (
     <section className="max-w-7xl mx-auto">
-      <PostUploadForm 
-        userId={userId} 
-        onPostCreated={handlePostCreated} 
-      />
+      {isOwnProfile && 
+        (<PostUploadForm 
+          userId={userId} 
+          onPostCreated={handlePostCreated} 
+        />)}
+      
       <ProfileGallery
         userId={userId}
+        isOwnProfile={isOwnProfile}
         refreshTrigger={refreshTrigger}
         onPostClick={handlePostClick}
       />
       <PostModal
         post={selectedPost || undefined}
+        isOwnProfile={isOwnProfile}
         onClose={handleCloseModal}
         onDelete={handleDeletePost}
       />

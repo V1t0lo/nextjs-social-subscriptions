@@ -5,11 +5,12 @@ import { Post } from "@/types/index";
 
 interface Props {
   post?: Post | null;
+  isOwnProfile: boolean;
   onClose: () => void;
   onDelete: () => void;
 }
 
-export default function PostModal({ post, onClose, onDelete }: Props) {
+export default function PostModal({ post, isOwnProfile, onClose, onDelete }: Props) {
   if (!post) return null;
 
   return (
@@ -43,12 +44,14 @@ export default function PostModal({ post, onClose, onDelete }: Props) {
           />
         )}
 
-        <button
-          onClick={onDelete}
-          className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
-        >
-          Eliminar publicación
-        </button>
+        {isOwnProfile && (
+          <button
+            onClick={onDelete}
+            className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+          >
+            Eliminar publicación
+          </button>
+        )}
       </div>
     </div>
   );

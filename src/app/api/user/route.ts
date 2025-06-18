@@ -1,10 +1,10 @@
 // src/app/api/user/route.ts
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { getUserById } from "@/lib/users";
 
 export async function GET(req: NextRequest) {
   try {
-    
     const { searchParams } = new URL(req.url);
     const userId = searchParams.get("userId");
 
@@ -15,13 +15,7 @@ export async function GET(req: NextRequest) {
       );
     }
 
-    const user = await prisma.user.findUnique({
-      where: { id: userId },
-      select: {
-        name: true,
-        email: true,
-      },
-    });
+    const user = await getUserById(userId);
 
     if (!user) {
       return NextResponse.json(

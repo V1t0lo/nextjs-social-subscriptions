@@ -1,6 +1,6 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
-import { redirect } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import StickyHeader from "@/components/layout/StickyHeader";
 import { ArrowLeft } from "lucide-react";
 
@@ -8,6 +8,7 @@ import ProfileContent from "@/components/profile/ProfileContent";
 import ProfileActions from "@/components/profile/ProfileActions";
 import Link from "next/link";
 import UserInfo from "@/components/profile/UserInfo";
+import { getUserById } from "@/lib/users";
 
 export default async function ProfilePage() {
   const session = await getServerSession(authOptions);
@@ -17,7 +18,9 @@ export default async function ProfilePage() {
     redirect("/auth/login");
   }
 
-  const { user } = session;
+  const user = await getUserById(session.user.id);
+
+  if (!user) return notFound();
 
   return (
     <main className="min-h-screen bg-gray-50 text-gray-900 px-4 py-6">
@@ -33,15 +36,10 @@ export default async function ProfilePage() {
       />
 
       {/* Información del usuario */}
-      <UserInfo
-        user={user}
-        // isOwnProfile={isOwnProfile}
-        // isSubscribed={isSubscribed}
-        // onSubscribeToggle={handleSubscribeToggle}
-      />
+      <UserInfo user={user} isOwnProfile={true} />
 
       {/* Contenido interactivo del perfil */}
-      <ProfileContent userId={user.id} />
+      <ProfileContent userId={user.id} isOwnProfile={true} />
     </main>
   );
 }

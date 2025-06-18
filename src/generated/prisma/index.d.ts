@@ -8697,7 +8697,7 @@ export namespace Prisma {
 
   export type FollowWhereUniqueInput = Prisma.AtLeast<{
     id?: string
-    followerId_followedId?: FollowFollowerIdFollowedIdCompoundUniqueInput
+    followerId_followedId?: FollowFollowerId_followedIdCompoundUniqueInput
     AND?: FollowWhereInput | FollowWhereInput[]
     OR?: FollowWhereInput[]
     NOT?: FollowWhereInput | FollowWhereInput[]
@@ -8753,7 +8753,7 @@ export namespace Prisma {
 
   export type SubscriptionWhereUniqueInput = Prisma.AtLeast<{
     id?: string
-    subscriberId_subscribedToId?: SubscriptionSubscriberIdSubscribedToIdCompoundUniqueInput
+    subscriberId_subscribedToId?: SubscriptionSubscriberId_subscribedToIdCompoundUniqueInput
     AND?: SubscriptionWhereInput | SubscriptionWhereInput[]
     OR?: SubscriptionWhereInput[]
     NOT?: SubscriptionWhereInput | SubscriptionWhereInput[]
@@ -9522,7 +9522,7 @@ export namespace Prisma {
     createdAt?: SortOrder
   }
 
-  export type FollowFollowerIdFollowedIdCompoundUniqueInput = {
+  export type FollowFollowerId_followedIdCompoundUniqueInput = {
     followerId: string
     followedId: string
   }
@@ -9548,7 +9548,7 @@ export namespace Prisma {
     createdAt?: SortOrder
   }
 
-  export type SubscriptionSubscriberIdSubscribedToIdCompoundUniqueInput = {
+  export type SubscriptionSubscriberId_subscribedToIdCompoundUniqueInput = {
     subscriberId: string
     subscribedToId: string
   }
